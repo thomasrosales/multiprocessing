@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "concurrency-parallel"
+version = "0.1.0"
+description = ""
+authors = ["Tomás Rosales <trosales@mercadolibre.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.31.0"
+beautifulsoup4 = "^4.12.3"
+ipython = "8.12.2"
+lxml = "4.9.4"
+sqlalchemy = "^2.0.29"
+psycopg2-binary = "^2.9.9"
+pyyaml = "^6.0.1"
+addict = "^2.4.0"
+schema = "^0.7.5"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

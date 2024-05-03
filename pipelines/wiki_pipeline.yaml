@@ -1,0 +1,18 @@
+queues:
+  - name: SymbolQueue
+    description:  contains symbols to be scraped from yahoo finance
+
+  - name: PostgresUploading
+    description: contains data that needs to be uploaded to postgres
+
+workers:
+
+  - name: WikiWorker
+    description: This scraps raw wikipedia page and pulls out symbols
+    location: workers/wiki.py
+    klass: WikiWorker
+
+  - name: yahooFinancePriceWorker
+    description: pulls price data for a specific stock symbol from yahoo finance
+    location: workers/yahoo_finance.py
+    klass: YahooFinancePriceScheduler
