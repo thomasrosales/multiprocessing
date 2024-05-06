@@ -2,11 +2,7 @@ import time
 
 from multiprocessing import Queue
 
-import yaml
-from addict import Dict
-from schema import SchemaError
-
-from pipelines.schema import config_schema
+from core.executor import PipelineExecutor
 from workers.postgres import PostgresMasterScheduler
 from workers.sleeps import SleepyWorker
 from workers.squared_sum import SquaredSumWorker
@@ -114,13 +110,10 @@ def main_4():
 
 
 def main_5():
-    with open("pipelines/wiki_pipeline.yaml", "r") as config:
-        config_yaml = yaml.safe_load(config)
-        try:
-            configuration = Dict(config_schema.validate(config_yaml))
-            print("Configuration is valid.")
-        except SchemaError as se:
-            raise se
+    calc_start_time = time.time()
+    executor = PipelineExecutor("pipelines/wiki_pipeline.yaml")
+    executor.start()
+    print(f"Calculating time of square took: {time.time() - calc_start_time}")
 
 
 if __name__ == "__main__":

@@ -10,13 +10,14 @@ from lxml import html
 
 
 class YahooFinancePriceScheduler(Thread):  # master threading class
-    def __init__(self, queue, output_queue=None, **kwargs):
+    def __init__(self, queue, output_queue=None, start=True, **kwargs):
         super().__init__(**kwargs)
         self._queue: Queue = queue
         self._output_queue: Queue = (
             output_queue  # we can extend it to a list for different DB workers
         )
-        self.start()
+        if start:
+            self.start()
 
     def _send_message_to_output_queue(self, message):
         if self._output_queue:
@@ -25,7 +26,7 @@ class YahooFinancePriceScheduler(Thread):  # master threading class
     def run(self):
         while True:
             try:
-                value = self._queue.get(timeout=10)  # blocking operation
+                value = self._queue.get(timeout=50)  # blocking operation
             except Empty as exc:
                 # is going to stop due to the fact is not values queued
                 # timeout not to short because it could be just delays
@@ -33,7 +34,7 @@ class YahooFinancePriceScheduler(Thread):  # master threading class
                 break
 
             if value == "DONE":
-                self._send_message_to_output_queue("DONE")
+                # self._send_message_to_output_queue("DONE")
                 break
 
             yahoo_worker = YahooFinancePriceWorker(value)
@@ -42,6 +43,7 @@ class YahooFinancePriceScheduler(Thread):  # master threading class
             self._send_message_to_output_queue((value, symbol_price, datetime.utcnow()))
             time.sleep(random.random())
             # return symbol_price never return because the process finished
+        print(f"{self} finished")
 
 
 class YahooFinancePriceWorker:  # Thread

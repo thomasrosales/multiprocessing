@@ -10,9 +10,24 @@ workers:
   - name: WikiWorker
     description: This scraps raw wikipedia page and pulls out symbols
     location: workers/wiki.py
-    klass: WikiWorker
+    klass: WikiWorkerMaster
+    num_of_threads: 1
+    output_queues:
+      - SymbolQueue
 
-  - name: yahooFinancePriceWorker
+  - name: YahooFinancePriceWorker
     description: pulls price data for a specific stock symbol from yahoo finance
     location: workers/yahoo_finance.py
     klass: YahooFinancePriceScheduler
+    num_of_threads: 4
+    input_queue: SymbolQueue
+    output_queues:
+      - PostgresUploading
+
+  - name: PostgresWorker
+    description: takes stock data and saves in postgres
+    location: workers/postgres.py
+    num_of_threads: 4
+    klass: PostgresMasterScheduler
+    input_queue: PostgresUploading
+
