@@ -109,3 +109,4 @@ class PipelineExecutor(Thread):
                         print(f"{Queue} finished")
 
             time.sleep(5)
+        self._join_workers()
