@@ -2,7 +2,7 @@ from threading import Thread, Lock
 
 counter = 0  # Global Access -> Generates raise conditions
 
-lock = Lock()
+lock = Lock()  # Prevents multiple resource access at the same time
 
 
 def increment():
