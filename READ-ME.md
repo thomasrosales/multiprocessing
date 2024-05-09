@@ -40,6 +40,15 @@ The multiprocessing package mostly replicates the API of the threading module.
 
 Process objects represent activity that is run in a separate process. The Process class has equivalents of all the methods of threading.Thread [Documentation](https://docs.python.org/3/library/multiprocessing.html#process-and-exceptions).
 
+
+# Asyncio
+
+asyncio is a library to write concurrent code using the async/await syntax.
+
+asyncio is used as a foundation for multiple Python asynchronous frameworks that provide high-performance network and web-servers, database connection libraries, distributed task queues, etc.
+
+asyncio is often a perfect fit for IO-bound and high-level structured network code [Documentation](https://docs.python.org/es/3/library/asyncio.html).
+
 # Resources
 
 - [Validate YAML Python Schema](https://www.andrewvillazon.com/validate-yaml-python-schema/)
